@@ -10,6 +10,21 @@ const PORT = process.env.PORT || 3001;
 app.use(cors());
 app.use(express.json());
 
+app.get('/', (req, res) => {
+  res.json({
+    message: '🚀 Netflix Executive Talent Intelligence API',
+    status: 'running',
+    version: '1.0.0',
+    endpoints: {
+      health: '/api/health',
+      insights: '/api/insights',
+      filters: '/api/filters',
+      stats: '/api/stats'
+    },
+    docs: 'Visit /api/health to check API status'
+  });
+});
+
 app.get('/api/health', (req, res) => {
   res.json({ status: 'healthy', timestamp: new Date().toISOString() });
 });

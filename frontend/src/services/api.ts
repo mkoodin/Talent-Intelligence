@@ -1,9 +1,11 @@
 import { Insight, FilterOptions, Filters } from '../types';
 
-// Use environment variable if available, otherwise use relative path for local dev
+// Backend API URL - change this if deploying to a different backend
 const API_BASE_URL = import.meta.env.VITE_API_URL
   ? `${import.meta.env.VITE_API_URL}/api`
-  : '/api';
+  : import.meta.env.PROD
+  ? 'https://talent-intelligence.onrender.com/api'  // Production backend
+  : '/api';  // Local development
 
 export async function fetchInsights(filters: Partial<Filters>): Promise<Insight[]> {
   const params = new URLSearchParams();

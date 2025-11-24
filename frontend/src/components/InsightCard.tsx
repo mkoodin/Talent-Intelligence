@@ -11,9 +11,33 @@ const categoryColors: Record<string, string> = {
   'Talent Supply Shifts': 'bg-green-500'
 };
 
+const sourceUrls: Record<string, string> = {
+  'LinkedIn Talent Insights': 'https://business.linkedin.com/talent-solutions',
+  'LinkedIn': 'https://www.linkedin.com',
+  'Crunchbase': 'https://www.crunchbase.com',
+  'PitchBook': 'https://pitchbook.com',
+  'Levels.fyi': 'https://www.levels.fyi',
+  'Payscale': 'https://www.payscale.com',
+  'Bureau of Labor Statistics': 'https://www.bls.gov',
+  'OECD': 'https://www.oecd.org',
+  'World Bank': 'https://www.worldbank.org',
+  'Trading Economics': 'https://tradingeconomics.com',
+  'IMF': 'https://www.imf.org',
+  'Layoffs.fyi': 'https://layoffs.fyi',
+  'TechCrunch': 'https://techcrunch.com',
+  'TechInAsia': 'https://www.techinasia.com',
+  'The Information': 'https://www.theinformation.com',
+  'eMarketer': 'https://www.emarketer.com',
+  'Mercer': 'https://www.mercer.com'
+};
+
 export default function InsightCard({ insight }: InsightCardProps) {
   const categoryColor = categoryColors[insight.category] || 'bg-gray-500';
   const confidencePercentage = Math.round(insight.confidence * 100);
+
+  const getSourceUrl = (source: string): string | undefined => {
+    return sourceUrls[source];
+  };
 
   return (
     <div className="bg-netflix-gray rounded-lg p-6 shadow-lg border border-gray-700 hover:border-netflix-red transition-colors">
@@ -59,14 +83,27 @@ export default function InsightCard({ insight }: InsightCardProps) {
         <div className="pt-3 border-t border-gray-700">
           <h4 className="text-gray-400 text-xs font-semibold mb-2">Sources</h4>
           <div className="flex flex-wrap gap-2">
-            {insight.sources.map((source, idx) => (
-              <span
-                key={idx}
-                className="bg-netflix-black text-gray-300 text-xs px-2 py-1 rounded border border-gray-700"
-              >
-                {source}
-              </span>
-            ))}
+            {insight.sources.map((source, idx) => {
+              const url = getSourceUrl(source);
+              return url ? (
+                <a
+                  key={idx}
+                  href={url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-netflix-black text-gray-300 text-xs px-2 py-1 rounded border border-gray-700 hover:border-netflix-red hover:text-white transition-colors cursor-pointer"
+                >
+                  {source} ↗
+                </a>
+              ) : (
+                <span
+                  key={idx}
+                  className="bg-netflix-black text-gray-300 text-xs px-2 py-1 rounded border border-gray-700"
+                >
+                  {source}
+                </span>
+              );
+            })}
           </div>
         </div>
 

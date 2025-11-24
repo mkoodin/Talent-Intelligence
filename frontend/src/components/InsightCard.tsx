@@ -12,23 +12,29 @@ const categoryColors: Record<string, string> = {
 };
 
 const sourceUrls: Record<string, string> = {
-  'LinkedIn Talent Insights': 'https://business.linkedin.com/talent-solutions',
-  'LinkedIn': 'https://www.linkedin.com',
-  'Crunchbase': 'https://www.crunchbase.com',
-  'PitchBook': 'https://pitchbook.com',
-  'Levels.fyi': 'https://www.levels.fyi',
-  'Payscale': 'https://www.payscale.com',
-  'Bureau of Labor Statistics': 'https://www.bls.gov',
-  'OECD': 'https://www.oecd.org',
-  'World Bank': 'https://www.worldbank.org',
-  'Trading Economics': 'https://tradingeconomics.com',
-  'IMF': 'https://www.imf.org',
+  'LinkedIn Talent Insights': 'https://business.linkedin.com/talent-solutions/talent-insights',
+  'LinkedIn': 'https://www.linkedin.com/pulse/topics/home',
+  'Crunchbase': 'https://www.crunchbase.com/discover/organization.companies',
+  'PitchBook': 'https://pitchbook.com/news',
+  'Levels.fyi': 'https://www.levels.fyi/comp.html',
+  'Payscale': 'https://www.payscale.com/research/US/Country=United_States/Salary',
+  'Bureau of Labor Statistics': 'https://www.bls.gov/news.release/empsit.toc.htm',
+  'BLS CPS': 'https://www.bls.gov/cps/data.htm',
+  'BLS Employment': 'https://www.bls.gov/ces/',
+  'OECD': 'https://www.oecd.org/employment/emp/employmentdatabase-employment.htm',
+  'OECD Employment Outlook': 'https://www.oecd.org/employment-outlook/',
+  'FRED': 'https://fred.stlouisfed.org/categories/12',
+  'FRED Employment': 'https://fred.stlouisfed.org/categories/10',
+  'FRED Wages': 'https://fred.stlouisfed.org/categories/32447',
+  'World Bank': 'https://data.worldbank.org/indicator',
+  'Trading Economics': 'https://tradingeconomics.com/united-states/indicators',
+  'IMF': 'https://www.imf.org/en/Publications/WEO',
   'Layoffs.fyi': 'https://layoffs.fyi',
-  'TechCrunch': 'https://techcrunch.com',
-  'TechInAsia': 'https://www.techinasia.com',
-  'The Information': 'https://www.theinformation.com',
-  'eMarketer': 'https://www.emarketer.com',
-  'Mercer': 'https://www.mercer.com'
+  'TechCrunch': 'https://techcrunch.com/category/venture/',
+  'TechInAsia': 'https://www.techinasia.com/startups',
+  'The Information': 'https://www.theinformation.com/articles',
+  'eMarketer': 'https://www.emarketer.com/insights/charts/',
+  'Mercer': 'https://www.mercer.com/our-thinking/career/global-talent-hr-trends.html'
 };
 
 export default function InsightCard({ insight }: InsightCardProps) {

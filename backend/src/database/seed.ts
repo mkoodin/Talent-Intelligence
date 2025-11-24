@@ -196,6 +196,76 @@ function seedInsights() {
       initiative: 'Global Expansion',
       category: InsightCategory.TALENT_SUPPLY,
       created_at: '2024-11-11T09:30:00Z'
+    },
+    {
+      id: generateId(),
+      signal: 'BLS CPS data shows professional and technical services employment up 3.2% (245,000 jobs) in Q4 2024',
+      interpretation: 'Strong demand for executive talent in tech sector despite high-profile layoffs, indicating selective hiring at senior levels',
+      recommendation: 'Focus recruitment on high-growth tech subsectors identified in CPS data: AI/ML, cloud infrastructure, and digital advertising',
+      sources: JSON.stringify(['BLS CPS', 'FRED Employment', 'Bureau of Labor Statistics']),
+      confidence: 0.94,
+      company: 'Netflix',
+      function: 'AI',
+      region: 'NA',
+      initiative: 'AI Expansion',
+      category: InsightCategory.TALENT_SUPPLY,
+      created_at: '2024-11-10T08:00:00Z'
+    },
+    {
+      id: generateId(),
+      signal: 'OECD reports average wage growth of 4.1% across member countries, with tech sector at 5.8%',
+      interpretation: 'Global executive compensation pressure increasing, particularly in technology and digital media sectors',
+      recommendation: 'Benchmark Netflix executive compensation against OECD tech sector averages; adjust bands in high-growth markets by 5-7%',
+      sources: JSON.stringify(['OECD Employment Outlook', 'OECD', 'FRED Wages']),
+      confidence: 0.91,
+      company: 'Netflix',
+      function: 'Content Ops',
+      region: 'EMEA',
+      initiative: null,
+      category: InsightCategory.WAGE_PRESSURE,
+      created_at: '2024-11-09T14:20:00Z'
+    },
+    {
+      id: generateId(),
+      signal: 'FRED data: U.S. employment cost index for management occupations increased 4.3% YoY (Series: ECIWAG)',
+      interpretation: 'Executive compensation inflation outpacing general wage growth, driven by talent scarcity in streaming and tech',
+      recommendation: 'Update executive comp models using FRED ECI data; prioritize equity-heavy packages to manage cash compensation pressure',
+      sources: JSON.stringify(['FRED Wages', 'FRED', 'Bureau of Labor Statistics']),
+      confidence: 0.93,
+      company: 'Netflix',
+      function: 'Product',
+      region: 'NA',
+      initiative: null,
+      category: InsightCategory.WAGE_PRESSURE,
+      created_at: '2024-11-08T11:45:00Z'
+    },
+    {
+      id: generateId(),
+      signal: 'BLS reports unemployment rate for workers with advanced degrees at 1.8%, lowest on record',
+      interpretation: 'Exceptionally tight labor market for executive-level talent with graduate degrees in tech, media, and business',
+      recommendation: 'Expand executive recruiting beyond traditional pools; consider international talent and non-traditional career paths',
+      sources: JSON.stringify(['BLS Employment', 'BLS CPS', 'FRED Employment']),
+      confidence: 0.89,
+      company: 'Netflix',
+      function: 'Ads',
+      region: 'NA',
+      initiative: 'Ad-tier Expansion',
+      category: InsightCategory.TALENT_SUPPLY,
+      created_at: '2024-11-07T10:15:00Z'
+    },
+    {
+      id: generateId(),
+      signal: 'OECD Employment Outlook: Executive mobility in digital sector up 38% globally, with APAC leading at 52%',
+      interpretation: 'High executive turnover creating recruitment opportunities but also retention risks, especially in Asia-Pacific',
+      recommendation: 'Develop APAC-specific retention program; offer competitive long-term incentives and regional leadership opportunities',
+      sources: JSON.stringify(['OECD Employment Outlook', 'OECD', 'LinkedIn Talent Insights']),
+      confidence: 0.90,
+      company: 'Netflix',
+      function: 'AI',
+      region: 'APAC',
+      initiative: 'AI Expansion',
+      category: InsightCategory.EXECUTIVE_TALENT,
+      created_at: '2024-11-06T09:00:00Z'
     }
   ];
 
@@ -221,7 +291,7 @@ function seedInsights() {
     );
   }
 
-  console.log(`✅ Seeded ${insights.length} insights`);
+  console.log(`✅ Seeded ${insights.length} insights (including CPS, BLS, OECD, and FRED data)`);
 }
 
 function main() {

@@ -1,6 +1,9 @@
 import { Insight, FilterOptions, Filters } from '../types';
 
-const API_BASE_URL = '/api';
+// Use environment variable if available, otherwise use relative path for local dev
+const API_BASE_URL = import.meta.env.VITE_API_URL
+  ? `${import.meta.env.VITE_API_URL}/api`
+  : '/api';
 
 export async function fetchInsights(filters: Partial<Filters>): Promise<Insight[]> {
   const params = new URLSearchParams();

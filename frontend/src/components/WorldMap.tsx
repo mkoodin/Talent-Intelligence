@@ -40,7 +40,6 @@ const regionColors: Record<string, { default: string; hover: string }> = {
 const geoUrl = "https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries.json";
 
 export default function WorldMap({ insights }: WorldMapProps) {
-  const [hoveredRegion, setHoveredRegion] = useState<string | null>(null);
   const [tooltipContent, setTooltipContent] = useState<{
     region: string;
     insights: Insight[];
@@ -70,7 +69,6 @@ export default function WorldMap({ insights }: WorldMapProps) {
     const region = countryToRegion[countryCode];
 
     if (region) {
-      setHoveredRegion(region);
       const regionData = getRegionInsights(region);
       setTooltipContent({ region, ...regionData });
       setTooltipPosition({ x: event.clientX, y: event.clientY });
@@ -84,7 +82,6 @@ export default function WorldMap({ insights }: WorldMapProps) {
   };
 
   const handleMouseLeave = () => {
-    setHoveredRegion(null);
     setTooltipContent(null);
   };
 
@@ -112,7 +109,7 @@ export default function WorldMap({ insights }: WorldMapProps) {
           }}
           style={{ width: '100%', height: '100%' }}
         >
-          <Sphere stroke="#374151" strokeWidth={0.5} />
+          <Sphere id="sphere" fill="transparent" stroke="#374151" strokeWidth={0.5} />
           <Graticule stroke="#374151" strokeWidth={0.5} />
           <Geographies geography={geoUrl}>
             {({ geographies }: { geographies: any[] }) =>

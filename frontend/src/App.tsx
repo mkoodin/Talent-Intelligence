@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import Header from './components/Header';
 import FilterBar from './components/FilterBar';
+import WorldMap from './components/WorldMap';
 import InsightCard from './components/InsightCard';
 import Stats from './components/Stats';
 import { Insight, FilterOptions, Filters } from './types';
@@ -89,6 +90,10 @@ function App() {
           onFilterChange={setFilters}
         />
 
+        <div className="mb-8">
+          <WorldMap insights={insights} />
+        </div>
+
         <Stats
           totalInsights={totalInsights || insights.length}
           filteredCount={insights.length}
@@ -127,7 +132,7 @@ function App() {
               Netflix Executive Engagement & Talent Intelligence Platform
             </div>
             <div className="text-gray-500 text-xs">
-              Data sources: OECD, LinkedIn, Levels.fyi, Crunchbase, World Bank
+              Data sources: BLS, FRED, OECD, Layoffs.fyi, LinkedIn, Levels.fyi, World Bank
             </div>
           </div>
         </div>

@@ -37,7 +37,8 @@ const regionColors: Record<string, { default: string; hover: string }> = {
   'APAC': { default: '#581c87', hover: '#a855f7' },     // Purple
 };
 
-const geoUrl = "https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries.json";
+// Using reliable TopoJSON from unpkg CDN
+const geoUrl = "https://unpkg.com/world-atlas@2.0.2/countries-110m.json";
 
 export default function WorldMap({ insights }: WorldMapProps) {
   const [tooltipContent, setTooltipContent] = useState<{
@@ -109,8 +110,8 @@ export default function WorldMap({ insights }: WorldMapProps) {
           }}
           style={{ width: '100%', height: '100%' }}
         >
-          <Sphere id="sphere" fill="transparent" stroke="#374151" strokeWidth={0.5} />
-          <Graticule stroke="#374151" strokeWidth={0.5} />
+          <Sphere id="sphere" fill="transparent" stroke="#4b5563" strokeWidth={0.5} />
+          <Graticule stroke="#374151" strokeWidth={0.3} />
           <Geographies geography={geoUrl}>
             {({ geographies }: { geographies: any[] }) =>
               geographies.map((geo: any) => {
@@ -127,20 +128,20 @@ export default function WorldMap({ insights }: WorldMapProps) {
                     onMouseLeave={handleMouseLeave}
                     style={{
                       default: {
-                        fill: colors ? colors.default : '#1f2937',
-                        stroke: '#000',
+                        fill: colors ? colors.default : '#4b5563',
+                        stroke: '#1f2937',
                         strokeWidth: 0.5,
                         outline: 'none',
                       },
                       hover: {
-                        fill: colors ? colors.hover : '#374151',
+                        fill: colors ? colors.hover : '#6b7280',
                         stroke: '#E50914',
                         strokeWidth: 1.5,
                         outline: 'none',
                         cursor: region ? 'pointer' : 'default'
                       },
                       pressed: {
-                        fill: colors ? colors.hover : '#374151',
+                        fill: colors ? colors.hover : '#6b7280',
                         outline: 'none'
                       }
                     }}

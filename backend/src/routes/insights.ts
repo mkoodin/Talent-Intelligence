@@ -1,13 +1,15 @@
 import express from 'express';
 import { db } from '../config/database';
 import { Insight, FilterOptions, InsightQuery, InsightCategory } from '../models/types';
+import { realTimeInsightGenerator } from '../services/realTimeInsightGenerator';
 
 const router = express.Router();
 
-router.get('/insights', (req, res) => {
+router.get('/insights', async (req, res) => {
   try {
-    const { company, function: func, region, initiative, category } = req.query as InsightQuery;
+    const { company, function: func, region, initiative, category, includeRealTime } = req.query as InsightQuery & { includeRealTime?: string };
 
+    // Fetch database insights
     let query = 'SELECT * FROM insights WHERE 1=1';
     const params: any[] = [];
 
@@ -41,7 +43,7 @@ router.get('/insights', (req, res) => {
     const stmt = db.prepare(query);
     const rows = stmt.all(...params);
 
-    const insights: Insight[] = rows.map((row: any) => ({
+    let insights: Insight[] = rows.map((row: any) => ({
       id: row.id,
       signal: row.signal,
       interpretation: row.interpretation,
@@ -56,7 +58,44 @@ router.get('/insights', (req, res) => {
       createdAt: row.created_at
     }));
 
-    res.json({ success: true, data: insights, count: insights.length });
+    // Include real-time insights from BLS/FRED APIs (default: true)
+    if (includeRealTime !== 'false') {
+      try {
+        console.log('🔄 Fetching real-time insights from BLS/FRED APIs...');
+        const realTimeInsights = await realTimeInsightGenerator.generateRealTimeInsights();
+
+        // Convert real-time insights to standard format and prepend
+        const formattedRealTimeInsights: Insight[] = realTimeInsights.map((insight, index) => ({
+          id: `realtime-${Date.now()}-${index}`,
+          signal: insight.signal,
+          interpretation: insight.interpretation,
+          recommendation: insight.recommendation,
+          sources: insight.sources,
+          confidence: insight.confidence,
+          company: insight.company,
+          function: insight.function,
+          region: insight.region,
+          initiative: insight.initiative,
+          category: insight.category,
+          createdAt: insight.dataTimestamp
+        }));
+
+        console.log(`✅ Generated ${formattedRealTimeInsights.length} real-time insights from live APIs`);
+
+        // Prepend real-time insights (they show first as most recent)
+        insights = [...formattedRealTimeInsights, ...insights];
+      } catch (error) {
+        console.error('⚠️  Error fetching real-time insights:', error);
+        // Continue with database insights if real-time fetch fails
+      }
+    }
+
+    res.json({
+      success: true,
+      data: insights,
+      count: insights.length,
+      realTimeEnabled: includeRealTime !== 'false'
+    });
   } catch (error) {
     console.error('Error fetching insights:', error);
     res.status(500).json({ success: false, error: 'Failed to fetch insights' });

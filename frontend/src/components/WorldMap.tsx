@@ -40,7 +40,6 @@ const regionColors: Record<string, { default: string; hover: string }> = {
 const geoUrl = "https://raw.githubusercontent.com/deldersveld/topojson/master/world-countries.json";
 
 export default function WorldMap({ insights }: WorldMapProps) {
-  const [hoveredRegion, setHoveredRegion] = useState<string | null>(null);
   const [tooltipContent, setTooltipContent] = useState<{
     region: string;
     insights: Insight[];
@@ -65,26 +64,24 @@ export default function WorldMap({ insights }: WorldMapProps) {
     };
   };
 
-  const handleMouseEnter = (geo: any, event: any) => {
+  const handleMouseEnter = (geo: any, event: React.MouseEvent) => {
     const countryCode = geo.properties.ISO_A3;
     const region = countryToRegion[countryCode];
 
     if (region) {
-      setHoveredRegion(region);
       const regionData = getRegionInsights(region);
       setTooltipContent({ region, ...regionData });
       setTooltipPosition({ x: event.clientX, y: event.clientY });
     }
   };
 
-  const handleMouseMove = (event: any) => {
+  const handleMouseMove = (event: React.MouseEvent) => {
     if (tooltipContent) {
       setTooltipPosition({ x: event.clientX, y: event.clientY });
     }
   };
 
   const handleMouseLeave = () => {
-    setHoveredRegion(null);
     setTooltipContent(null);
   };
 
@@ -112,21 +109,20 @@ export default function WorldMap({ insights }: WorldMapProps) {
           }}
           style={{ width: '100%', height: '100%' }}
         >
-          <Sphere stroke="#374151" strokeWidth={0.5} />
+          <Sphere id="sphere" fill="transparent" stroke="#374151" strokeWidth={0.5} />
           <Graticule stroke="#374151" strokeWidth={0.5} />
           <Geographies geography={geoUrl}>
-            {({ geographies }) =>
-              geographies.map((geo) => {
+            {({ geographies }: { geographies: any[] }) =>
+              geographies.map((geo: any) => {
                 const countryCode = geo.properties.ISO_A3;
                 const region = countryToRegion[countryCode];
-                const isHovered = hoveredRegion === region;
                 const colors = region ? regionColors[region] : null;
 
                 return (
                   <Geography
                     key={geo.rsmKey}
                     geography={geo}
-                    onMouseEnter={(e) => handleMouseEnter(geo, e)}
+                    onMouseEnter={(e: React.MouseEvent) => handleMouseEnter(geo, e)}
                     onMouseMove={handleMouseMove}
                     onMouseLeave={handleMouseLeave}
                     style={{

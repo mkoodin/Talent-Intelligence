@@ -27,7 +27,7 @@ const sourceUrls: Record<string, string> = {
   'OECD': 'https://data.oecd.org/', // OECD Data Portal
   'OECD Employment Outlook': 'https://www.oecd.org/en/publications/oecd-employment-outlook-2024_ac8b3538-en.html', // 2024 Report
 
-  // Industry & Market Data
+  // Industry & Market Data - REAL DATA SOURCES
   'LinkedIn Talent Insights': 'https://business.linkedin.com/talent-solutions/talent-insights',
   'LinkedIn': 'https://www.linkedin.com/pulse/topics/talent-management',
   'Crunchbase': 'https://www.crunchbase.com/discover/organization.companies',
@@ -37,7 +37,11 @@ const sourceUrls: Record<string, string> = {
   'World Bank': 'https://data.worldbank.org/indicator',
   'Trading Economics': 'https://tradingeconomics.com/united-states/indicators',
   'IMF': 'https://www.imf.org/en/Publications/WEO',
-  'Layoffs.fyi': 'https://layoffs.fyi',
+
+  // Layoffs & Displacement Data (REAL verified layoff data)
+  'Layoffs.fyi': 'https://layoffs.fyi', // Real-time tech layoff tracker
+
+  // News & Industry Analysis
   'TechCrunch': 'https://techcrunch.com/category/venture/',
   'TechInAsia': 'https://www.techinasia.com/startups',
   'The Information': 'https://www.theinformation.com/articles',

@@ -37,8 +37,8 @@ const regionColors: Record<string, { default: string; hover: string }> = {
   'APAC': { default: '#581c87', hover: '#a855f7' },     // Purple
 };
 
-// Using reliable TopoJSON from unpkg CDN
-const geoUrl = "https://unpkg.com/world-atlas@2.0.2/countries-110m.json";
+// Using Natural Earth data with proper ISO codes from react-simple-maps
+const geoUrl = "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
 
 export default function WorldMap({ insights }: WorldMapProps) {
   const [tooltipContent, setTooltipContent] = useState<{
@@ -66,8 +66,18 @@ export default function WorldMap({ insights }: WorldMapProps) {
   };
 
   const handleMouseEnter = (geo: any, event: React.MouseEvent) => {
-    const countryCode = geo.properties.ISO_A3;
+    // Try multiple country code properties
+    const countryCode = geo.properties.ISO_A3 || geo.properties.ADM0_A3 || geo.id;
     const region = countryToRegion[countryCode];
+
+    // Debug: Log for first few hovers to help troubleshoot
+    if (Math.random() < 0.1) {
+      console.log('Country hover:', {
+        properties: geo.properties,
+        id: geo.id,
+        matchedRegion: region
+      });
+    }
 
     if (region) {
       const regionData = getRegionInsights(region);
@@ -115,7 +125,8 @@ export default function WorldMap({ insights }: WorldMapProps) {
           <Geographies geography={geoUrl}>
             {({ geographies }: { geographies: any[] }) =>
               geographies.map((geo: any) => {
-                const countryCode = geo.properties.ISO_A3;
+                // Try multiple country code properties for compatibility
+                const countryCode = geo.properties.ISO_A3 || geo.properties.ADM0_A3 || geo.id;
                 const region = countryToRegion[countryCode];
                 const colors = region ? regionColors[region] : null;
 

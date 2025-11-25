@@ -18,7 +18,7 @@ Each insight includes:
 - **Signal Detected**: Key data point or trend identified
 - **Interpretation**: What it means for talent strategy
 - **Strategic Recommendation**: Actionable next steps
-- **Data Sources**: OECD, LinkedIn, Levels.fyi, Crunchbase, etc.
+- **Data Sources**: Links to REAL data from BLS, FRED, OECD, LinkedIn, and more
 - **Confidence Score**: Data quality and reliability indicator (65-95%)
 
 ### Filtering System
@@ -36,6 +36,72 @@ Automated insight generation based on:
 - FX volatility and currency impacts
 - Layoff waves and hiring freezes
 - Organizational restructuring signals
+
+## 🔗 Real Data Sources Integration
+
+This platform integrates with **REAL government and official data sources** - NO fabricated statistics:
+
+### Available Data Sources
+
+1. **U.S. Bureau of Labor Statistics (BLS)**
+   - Current Population Survey (CPS) employment data
+   - Professional & technical services employment statistics
+   - Unemployment rates by education level
+   - [Data Portal](https://www.bls.gov/cps/data.htm)
+   - [Get Free API Key](https://data.bls.gov/registrationEngine/)
+
+2. **Federal Reserve Economic Data (FRED)**
+   - Employment Cost Index (ECIWAG)
+   - Wage and salary trends
+   - Management occupation compensation
+   - [Data Portal](https://fred.stlouisfed.org/)
+   - [Get Free API Key](https://fredaccount.stlouisfed.org/apikeys)
+
+3. **OECD (Organisation for Economic Co-operation and Development)**
+   - OECD Employment Outlook 2024
+   - International wage and employment data
+   - Global labor market indicators
+   - [Data Portal](https://data.oecd.org/)
+   - No API key required for public data
+
+### Setting Up Real Data
+
+1. Copy the environment template:
+   ```bash
+   cd backend
+   cp .env.example .env
+   ```
+
+2. Get your free API keys:
+   - **BLS**: https://data.bls.gov/registrationEngine/
+   - **FRED**: https://fredaccount.stlouisfed.org/apikeys
+
+3. Add keys to your `.env` file:
+   ```env
+   BLS_API_KEY=your_bls_api_key
+   FRED_API_KEY=your_fred_api_key
+   ```
+
+4. Restart the backend server
+
+### Real-Time Data Endpoints
+
+Check data source status:
+```bash
+curl http://localhost:3001/api/data-sources/status
+```
+
+Fetch live BLS employment data:
+```bash
+curl http://localhost:3001/api/data-sources/bls/professional-services-employment
+```
+
+Fetch live FRED Employment Cost Index:
+```bash
+curl http://localhost:3001/api/data-sources/fred/employment-cost-index
+```
+
+See `backend/README.md` for complete API documentation.
 
 ## Architecture
 
@@ -109,11 +175,21 @@ The web application will start on `http://localhost:3000`
 
 ### API Endpoints
 
+**Core Endpoints:**
 - `GET /api/health` - Health check
 - `GET /api/insights` - Fetch insights (supports query params for filtering)
 - `GET /api/insights/:id` - Fetch single insight by ID
 - `GET /api/filters` - Get available filter options
 - `GET /api/stats` - Get platform statistics
+
+**Real Data Source Endpoints:**
+- `GET /api/data-sources/status` - Check which data sources are configured
+- `GET /api/data-sources/bls/professional-services-employment` - Live BLS data
+- `GET /api/data-sources/bls/advanced-degree-unemployment` - BLS unemployment data
+- `GET /api/data-sources/fred/employment-cost-index` - Live FRED ECI data
+- `GET /api/data-sources/fred/employment-cost-yoy` - Year-over-year wage changes
+- `GET /api/data-sources/oecd/employment-outlook` - OECD report links
+- `GET /api/data-sources/oecd/resources` - OECD data resources
 
 ### Example API Usage
 
@@ -189,11 +265,17 @@ Talent-Intelligence/
 │   │   ├── config/         # Database configuration
 │   │   ├── database/       # Seed scripts
 │   │   ├── models/         # TypeScript types
-│   │   ├── routes/         # API endpoints
-│   │   ├── services/       # Business logic (rules engine)
+│   │   ├── routes/         # API endpoints (insights, data sources)
+│   │   ├── services/       # Business logic & external APIs
+│   │   │   ├── blsService.ts       # BLS API integration
+│   │   │   ├── fredService.ts      # FRED API integration
+│   │   │   ├── oecdService.ts      # OECD API integration
+│   │   │   └── insightGenerator.ts # Rules engine
 │   │   └── index.ts        # Express server
+│   ├── .env.example        # Environment variables template
 │   ├── package.json
-│   └── tsconfig.json
+│   ├── tsconfig.json
+│   └── README.md           # Backend-specific docs
 ├── frontend/
 │   ├── src/
 │   │   ├── components/     # React components
@@ -225,14 +307,16 @@ Talent-Intelligence/
 
 ## Future Enhancements
 
-- Real-time data integration with LinkedIn, OECD, Levels.fyi APIs
+- ✅ Real-time data integration with BLS, FRED, and OECD APIs (COMPLETED)
 - Advanced analytics dashboard with charts and trend visualization
+- Additional API integrations (LinkedIn Talent Insights, Levels.fyi)
 - Email alerts for high-confidence insights
 - Machine learning-based insight scoring
 - Export functionality (PDF, Excel)
 - User authentication and role-based access
 - Saved filters and custom views
 - Historical insight tracking
+- Automated daily data refresh from government sources
 
 ## License
 

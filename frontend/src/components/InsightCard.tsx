@@ -11,21 +11,29 @@ const categoryColors: Record<string, string> = {
   'Talent Supply Shifts': 'bg-green-500'
 };
 
+// Official data source URLs - pointing to actual data portals and reports
 const sourceUrls: Record<string, string> = {
+  // U.S. Bureau of Labor Statistics - Official Government Data
+  'Bureau of Labor Statistics': 'https://www.bls.gov/data/',
+  'BLS CPS': 'https://www.bls.gov/cps/data.htm', // Current Population Survey data tables
+  'BLS Employment': 'https://www.bls.gov/ces/', // Current Employment Statistics
+
+  // Federal Reserve Economic Data - Official Fed Data
+  'FRED': 'https://fred.stlouisfed.org/',
+  'FRED Employment': 'https://fred.stlouisfed.org/categories/10', // Employment & Population data
+  'FRED Wages': 'https://fred.stlouisfed.org/categories/32447', // Wages & Earnings data
+
+  // OECD - International Employment Data
+  'OECD': 'https://data.oecd.org/', // OECD Data Portal
+  'OECD Employment Outlook': 'https://www.oecd.org/en/publications/oecd-employment-outlook-2024_ac8b3538-en.html', // 2024 Report
+
+  // Industry & Market Data
   'LinkedIn Talent Insights': 'https://business.linkedin.com/talent-solutions/talent-insights',
-  'LinkedIn': 'https://www.linkedin.com/pulse/topics/home',
+  'LinkedIn': 'https://www.linkedin.com/pulse/topics/talent-management',
   'Crunchbase': 'https://www.crunchbase.com/discover/organization.companies',
   'PitchBook': 'https://pitchbook.com/news',
   'Levels.fyi': 'https://www.levels.fyi/comp.html',
   'Payscale': 'https://www.payscale.com/research/US/Country=United_States/Salary',
-  'Bureau of Labor Statistics': 'https://www.bls.gov/news.release/empsit.toc.htm',
-  'BLS CPS': 'https://www.bls.gov/cps/data.htm',
-  'BLS Employment': 'https://www.bls.gov/ces/',
-  'OECD': 'https://www.oecd.org/employment/emp/employmentdatabase-employment.htm',
-  'OECD Employment Outlook': 'https://www.oecd.org/employment-outlook/',
-  'FRED': 'https://fred.stlouisfed.org/categories/12',
-  'FRED Employment': 'https://fred.stlouisfed.org/categories/10',
-  'FRED Wages': 'https://fred.stlouisfed.org/categories/32447',
   'World Bank': 'https://data.worldbank.org/indicator',
   'Trading Economics': 'https://tradingeconomics.com/united-states/indicators',
   'IMF': 'https://www.imf.org/en/Publications/WEO',

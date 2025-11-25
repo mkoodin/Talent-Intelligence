@@ -65,7 +65,7 @@ export default function WorldMap({ insights }: WorldMapProps) {
     };
   };
 
-  const handleMouseEnter = (geo: any, event: any) => {
+  const handleMouseEnter = (geo: any, event: React.MouseEvent) => {
     const countryCode = geo.properties.ISO_A3;
     const region = countryToRegion[countryCode];
 
@@ -77,7 +77,7 @@ export default function WorldMap({ insights }: WorldMapProps) {
     }
   };
 
-  const handleMouseMove = (event: any) => {
+  const handleMouseMove = (event: React.MouseEvent) => {
     if (tooltipContent) {
       setTooltipPosition({ x: event.clientX, y: event.clientY });
     }
@@ -115,18 +115,17 @@ export default function WorldMap({ insights }: WorldMapProps) {
           <Sphere stroke="#374151" strokeWidth={0.5} />
           <Graticule stroke="#374151" strokeWidth={0.5} />
           <Geographies geography={geoUrl}>
-            {({ geographies }) =>
-              geographies.map((geo) => {
+            {({ geographies }: { geographies: any[] }) =>
+              geographies.map((geo: any) => {
                 const countryCode = geo.properties.ISO_A3;
                 const region = countryToRegion[countryCode];
-                const isHovered = hoveredRegion === region;
                 const colors = region ? regionColors[region] : null;
 
                 return (
                   <Geography
                     key={geo.rsmKey}
                     geography={geo}
-                    onMouseEnter={(e) => handleMouseEnter(geo, e)}
+                    onMouseEnter={(e: React.MouseEvent) => handleMouseEnter(geo, e)}
                     onMouseMove={handleMouseMove}
                     onMouseLeave={handleMouseLeave}
                     style={{

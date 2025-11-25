@@ -11,25 +11,37 @@ const categoryColors: Record<string, string> = {
   'Talent Supply Shifts': 'bg-green-500'
 };
 
+// Official data source URLs - pointing to actual data portals and reports
 const sourceUrls: Record<string, string> = {
+  // U.S. Bureau of Labor Statistics - Official Government Data
+  'Bureau of Labor Statistics': 'https://www.bls.gov/data/',
+  'BLS CPS': 'https://www.bls.gov/cps/data.htm', // Current Population Survey data tables
+  'BLS Employment': 'https://www.bls.gov/ces/', // Current Employment Statistics
+
+  // Federal Reserve Economic Data - Official Fed Data
+  'FRED': 'https://fred.stlouisfed.org/',
+  'FRED Employment': 'https://fred.stlouisfed.org/categories/10', // Employment & Population data
+  'FRED Wages': 'https://fred.stlouisfed.org/categories/32447', // Wages & Earnings data
+
+  // OECD - International Employment Data
+  'OECD': 'https://data.oecd.org/', // OECD Data Portal
+  'OECD Employment Outlook': 'https://www.oecd.org/en/publications/oecd-employment-outlook-2024_ac8b3538-en.html', // 2024 Report
+
+  // Industry & Market Data - REAL DATA SOURCES
   'LinkedIn Talent Insights': 'https://business.linkedin.com/talent-solutions/talent-insights',
-  'LinkedIn': 'https://www.linkedin.com/pulse/topics/home',
+  'LinkedIn': 'https://www.linkedin.com/pulse/topics/talent-management',
   'Crunchbase': 'https://www.crunchbase.com/discover/organization.companies',
   'PitchBook': 'https://pitchbook.com/news',
   'Levels.fyi': 'https://www.levels.fyi/comp.html',
   'Payscale': 'https://www.payscale.com/research/US/Country=United_States/Salary',
-  'Bureau of Labor Statistics': 'https://www.bls.gov/news.release/empsit.toc.htm',
-  'BLS CPS': 'https://www.bls.gov/cps/data.htm',
-  'BLS Employment': 'https://www.bls.gov/ces/',
-  'OECD': 'https://www.oecd.org/employment/emp/employmentdatabase-employment.htm',
-  'OECD Employment Outlook': 'https://www.oecd.org/employment-outlook/',
-  'FRED': 'https://fred.stlouisfed.org/categories/12',
-  'FRED Employment': 'https://fred.stlouisfed.org/categories/10',
-  'FRED Wages': 'https://fred.stlouisfed.org/categories/32447',
   'World Bank': 'https://data.worldbank.org/indicator',
   'Trading Economics': 'https://tradingeconomics.com/united-states/indicators',
   'IMF': 'https://www.imf.org/en/Publications/WEO',
-  'Layoffs.fyi': 'https://layoffs.fyi',
+
+  // Layoffs & Displacement Data (REAL verified layoff data)
+  'Layoffs.fyi': 'https://layoffs.fyi', // Real-time tech layoff tracker
+
+  // News & Industry Analysis
   'TechCrunch': 'https://techcrunch.com/category/venture/',
   'TechInAsia': 'https://www.techinasia.com/startups',
   'The Information': 'https://www.theinformation.com/articles',
@@ -39,7 +51,6 @@ const sourceUrls: Record<string, string> = {
 
 export default function InsightCard({ insight }: InsightCardProps) {
   const categoryColor = categoryColors[insight.category] || 'bg-gray-500';
-  const confidencePercentage = Math.round(insight.confidence * 100);
 
   const getSourceUrl = (source: string): string | undefined => {
     return sourceUrls[source];
@@ -47,28 +58,18 @@ export default function InsightCard({ insight }: InsightCardProps) {
 
   return (
     <div className="bg-netflix-gray rounded-lg p-6 shadow-lg border border-gray-700 hover:border-netflix-red transition-colors">
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex-1">
-          <div className="flex items-center gap-2 mb-2">
-            <span className={`${categoryColor} text-white text-xs font-semibold px-3 py-1 rounded-full`}>
-              {insight.category}
-            </span>
-            <span className="text-gray-400 text-xs">
-              {insight.region} • {insight.function}
-            </span>
-          </div>
-          <h3 className="text-white font-semibold text-lg mb-2">
-            {insight.signal}
-          </h3>
+      <div className="mb-4">
+        <div className="flex items-center gap-2 mb-2">
+          <span className={`${categoryColor} text-white text-xs font-semibold px-3 py-1 rounded-full`}>
+            {insight.category}
+          </span>
+          <span className="text-gray-400 text-xs">
+            {insight.region} • {insight.function}
+          </span>
         </div>
-        <div className="flex flex-col items-end gap-1">
-          <div className="text-right">
-            <div className="text-xs text-gray-400 mb-1">Confidence</div>
-            <div className={`text-lg font-bold ${confidencePercentage >= 90 ? 'text-green-400' : confidencePercentage >= 80 ? 'text-yellow-400' : 'text-orange-400'}`}>
-              {confidencePercentage}%
-            </div>
-          </div>
-        </div>
+        <h3 className="text-white font-semibold text-lg mb-2">
+          {insight.signal}
+        </h3>
       </div>
 
       <div className="space-y-4">

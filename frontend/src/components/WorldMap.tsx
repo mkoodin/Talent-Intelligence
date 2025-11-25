@@ -37,8 +37,8 @@ const regionColors: Record<string, { default: string; hover: string }> = {
   'APAC': { default: '#581c87', hover: '#a855f7' },     // Purple
 };
 
-// Using Natural Earth data with proper ISO codes from react-simple-maps
-const geoUrl = "https://raw.githubusercontent.com/zcreativelabs/react-simple-maps/master/topojson-maps/world-110m.json";
+// Using Natural Earth TopoJSON with ISO_A3 country codes from reliable CDN
+const geoUrl = "https://raw.githubusercontent.com/nvkelso/natural-earth-vector/master/geojson/ne_110m_admin_0_countries.geojson";
 
 export default function WorldMap({ insights }: WorldMapProps) {
   const [tooltipContent, setTooltipContent] = useState<{

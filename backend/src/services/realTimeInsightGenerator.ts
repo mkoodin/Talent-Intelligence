@@ -8,7 +8,7 @@ import { blsService } from './blsService';
 import { fredService } from './fredService';
 import { layoffsService } from './layoffsService';
 import { scarcityEngine } from './scarcityEngine';
-import { Insight } from '../models/types';
+import { Insight, InsightCategory } from '../models/types';
 
 export interface RealTimeInsight extends Omit<Insight, 'id' | 'createdAt'> {
   dataTimestamp: string;
@@ -38,9 +38,9 @@ export class RealTimeInsightGenerator {
             company: 'Netflix',
             function: 'All Functions',
             region: 'NA',
-            initiative: null,
-            category: 'Executive Talent Trends',
-            dataTimestamp: blsEmployment.latestDate || timestamp,
+            initiative: undefined,
+            category: InsightCategory.TALENT_SUPPLY,
+            dataTimestamp: timestamp,
             apiSources: ['BLS API - CES6054000001']
           });
         }
@@ -62,8 +62,8 @@ export class RealTimeInsightGenerator {
             company: 'Netflix',
             function: 'All Functions',
             region: 'NA',
-            initiative: null,
-            category: 'Wage Pressures & Inflation',
+            initiative: undefined,
+            category: InsightCategory.MACRO_ECONOMIC,
             dataTimestamp: timestamp,
             apiSources: ['FRED API - ECIWAG']
           });
@@ -82,8 +82,8 @@ export class RealTimeInsightGenerator {
           company: 'Netflix',
           function: 'All Functions',
           region: 'NA',
-          initiative: null,
-          category: 'Talent Supply Shifts',
+          initiative: undefined,
+          category: InsightCategory.TALENT_SUPPLY,
           dataTimestamp: timestamp,
           apiSources: ['Layoffs.fyi GitHub CSV']
         });
@@ -101,8 +101,8 @@ export class RealTimeInsightGenerator {
           company: 'Netflix',
           function: 'All Functions',
           region: 'NA',
-          initiative: null,
-          category: insight.category as any,
+          initiative: undefined,
+          category: InsightCategory.EXECUTIVE_TALENT,
           dataTimestamp: timestamp,
           apiSources: ['BLS', 'FRED', 'Layoffs.fyi']
         });

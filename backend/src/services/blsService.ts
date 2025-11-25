@@ -131,7 +131,7 @@ export class BLSService {
         throw new Error(`BLS API request failed: ${response.statusText}`);
       }
 
-      const result: BLSAPIResponse = await response.json();
+      const result = await response.json() as BLSAPIResponse;
 
       if (result.status !== 'REQUEST_SUCCEEDED') {
         throw new Error(`BLS API error: ${result.message.join(', ')}`);

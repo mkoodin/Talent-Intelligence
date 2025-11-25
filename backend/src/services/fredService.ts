@@ -159,7 +159,7 @@ export class FREDService {
         throw new Error(`FRED API request failed: ${response.statusText}`);
       }
 
-      const result: FREDResponse = await response.json();
+      const result = await response.json() as FREDResponse;
 
       const metadata = this.seriesMetadata[seriesId] || {
         name: seriesId,
